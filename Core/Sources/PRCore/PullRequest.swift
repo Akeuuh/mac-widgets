@@ -63,12 +63,18 @@ public struct WidgetContent: Equatable, Sendable {
     public let pullRequests: [PullRequest]
     public let totalCount: Int
     public let searchURL: URL
+    public let counter: Int
 
-    public init(login: String, pullRequests: [PullRequest], totalCount: Int, searchURL: URL) {
+    public init(login: String, pullRequests: [PullRequest], totalCount: Int, searchURL: URL, counter: Int) {
         self.login = login
         self.pullRequests = pullRequests
         self.totalCount = totalCount
         self.searchURL = searchURL
+        self.counter = counter
+    }
+
+    public var hasFailingCI: Bool {
+        pullRequests.contains { $0.ciState == .failure }
     }
 
     public func hiddenCount(showing capacity: Int) -> Int {

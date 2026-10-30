@@ -16,6 +16,6 @@ struct PullRequestsWidget: Widget {
         }
         .configurationDisplayName("Pull requests")
         .description("Les PR ouvertes d'un Périmètre : Mes PR, Revues demandées ou Mentionné ou assigné.")
-        .supportedFamilies([.systemMedium, .systemLarge, .systemExtraLarge])
+        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge, .systemExtraLarge])
     }
 }
