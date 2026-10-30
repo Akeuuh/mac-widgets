@@ -1,4 +1,4 @@
-name: PRWidgets
+name: MacWidgets
 options:
   bundleIdPrefix: io.github.akeuuh
   deploymentTarget:
@@ -14,29 +14,29 @@ packages:
   Core:
     path: Core
 targets:
-  PRWidgets:
+  MacWidgets:
     type: application
     platform: macOS
     sources: [App]
     dependencies:
-      - target: PRWidgetsExtension
+      - target: MacWidgetsExtension
       - package: Core
         product: GitHubClient
     info:
       path: App/Info.plist
       properties:
-        CFBundleDisplayName: PR Widgets
+        CFBundleDisplayName: Mac Widgets
         LSApplicationCategoryType: public.app-category.developer-tools
     entitlements:
-      path: App/PRWidgets.entitlements
+      path: App/MacWidgets.entitlements
       properties:
         com.apple.security.app-sandbox: true
         com.apple.security.network.client: true
         keychain-access-groups:
-          - $(AppIdentifierPrefix)io.github.akeuuh.PRWidgets
+          - $(AppIdentifierPrefix)io.github.akeuuh.MacWidgets
     settings:
-      PRODUCT_BUNDLE_IDENTIFIER: io.github.akeuuh.PRWidgets
-  PRWidgetsExtension:
+      PRODUCT_BUNDLE_IDENTIFIER: io.github.akeuuh.MacWidgets
+  MacWidgetsExtension:
     type: app-extension
     platform: macOS
     sources: [Widget]
@@ -50,15 +50,15 @@ targets:
     info:
       path: Widget/Info.plist
       properties:
-        CFBundleDisplayName: PR Widgets
+        CFBundleDisplayName: Mac Widgets
         NSExtension:
           NSExtensionPointIdentifier: com.apple.widgetkit-extension
     entitlements:
-      path: Widget/PRWidgetsExtension.entitlements
+      path: Widget/MacWidgetsExtension.entitlements
       properties:
         com.apple.security.app-sandbox: true
         com.apple.security.network.client: true
         keychain-access-groups:
-          - $(AppIdentifierPrefix)io.github.akeuuh.PRWidgets
+          - $(AppIdentifierPrefix)io.github.akeuuh.MacWidgets
     settings:
-      PRODUCT_BUNDLE_IDENTIFIER: io.github.akeuuh.PRWidgets.Widget
+      PRODUCT_BUNDLE_IDENTIFIER: io.github.akeuuh.MacWidgets.Widget

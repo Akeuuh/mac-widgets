@@ -2,7 +2,7 @@ import SwiftUI
 import WidgetKit
 
 @main
-struct PRWidgetsBundle: WidgetBundle {
+struct MacWidgetsBundle: WidgetBundle {
     var body: some Widget {
         PullRequestsWidget()
     }
