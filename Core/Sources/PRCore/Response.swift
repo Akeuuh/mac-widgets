@@ -27,6 +27,35 @@ struct SearchResponse: Decodable {
         let reviewDecision: String?
         let repository: Repository
         let commits: Commits
+        let comments: Comments
+        let reviews: Reviews
+    }
+
+    struct Author: Decodable {
+        let __typename: String
+        let login: String
+    }
+
+    struct Comments: Decodable {
+        let nodes: [Comment]
+    }
+
+    struct Comment: Decodable {
+        let author: Author?
+        let body: String
+        let createdAt: Date
+    }
+
+    struct Reviews: Decodable {
+        let nodes: [Review]
+    }
+
+    struct Review: Decodable {
+        let author: Author?
+        let body: String
+        let state: String
+        let submittedAt: Date?
+        let comments: Comments
     }
 
     struct Repository: Decodable {

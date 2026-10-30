@@ -15,7 +15,8 @@ public func makeContent(from response: Data) throws -> WidgetContent {
             ciState: ciState(of: node.commits.nodes.last?.commit.statusCheckRollup?.contexts.nodes ?? []),
             reviewDecision: reviewDecision(node.reviewDecision),
             hasConflict: node.mergeable == "CONFLICTING",
-            isDraft: node.isDraft
+            isDraft: node.isDraft,
+            lastMessage: lastMessage(of: node)
         )
     }
     return WidgetContent(
@@ -53,4 +54,24 @@ private func reviewDecision(_ value: String?) -> ReviewDecision {
     case "CHANGES_REQUESTED": .changesRequested
     default: .pending
     }
+}
+
+private func lastMessage(of node: SearchResponse.Node) -> Message? {
+    let submittedReviews = node.reviews.nodes.filter { $0.state != "PENDING" }
+    let comments = node.comments.nodes.map { ($0.author, $0.body, $0.createdAt) }
+    let reviews = submittedReviews.compactMap { review in
+        review.submittedAt.map { (review.author, review.body, $0) }
+    }
+    let inlineComments = submittedReviews.flatMap(\.comments.nodes).map { ($0.author, $0.body, $0.createdAt) }
+
+    return (comments + reviews + inlineComments)
+        .filter { author, body, _ in author?.__typename != "Bot" && !body.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
+        .max { $0.2 < $1.2 }
+        .map { author, body, date in
+            Message(
+                author: author?.login ?? "ghost",
+                excerpt: body.split(whereSeparator: \.isNewline).joined(separator: " "),
+                date: date
+            )
+        }
 }

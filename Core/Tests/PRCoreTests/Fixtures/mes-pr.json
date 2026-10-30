@@ -17,6 +17,12 @@
           "repository": {
             "nameWithOwner": "octocat/hello-world"
           },
+          "comments": {
+            "nodes": []
+          },
+          "reviews": {
+            "nodes": []
+          },
           "commits": {
             "nodes": [
               {
@@ -46,6 +52,12 @@
           "reviewDecision": "REVIEW_REQUIRED",
           "repository": {
             "nameWithOwner": "acme/billing"
+          },
+          "comments": {
+            "nodes": []
+          },
+          "reviews": {
+            "nodes": []
           },
           "commits": {
             "nodes": [

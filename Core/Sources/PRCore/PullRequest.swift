@@ -8,6 +8,18 @@ public enum ReviewDecision: Sendable {
     case approved, changesRequested, pending
 }
 
+public struct Message: Equatable, Sendable {
+    public let author: String
+    public let excerpt: String
+    public let date: Date
+
+    public init(author: String, excerpt: String, date: Date) {
+        self.author = author
+        self.excerpt = excerpt
+        self.date = date
+    }
+}
+
 public struct PullRequest: Equatable, Sendable {
     public let repository: String
     public let number: Int
@@ -18,6 +30,7 @@ public struct PullRequest: Equatable, Sendable {
     public let reviewDecision: ReviewDecision
     public let hasConflict: Bool
     public let isDraft: Bool
+    public let lastMessage: Message?
 
     public init(
         repository: String,
@@ -28,7 +41,8 @@ public struct PullRequest: Equatable, Sendable {
         ciState: CIState,
         reviewDecision: ReviewDecision,
         hasConflict: Bool,
-        isDraft: Bool
+        isDraft: Bool,
+        lastMessage: Message?
     ) {
         self.repository = repository
         self.number = number
@@ -39,6 +53,7 @@ public struct PullRequest: Equatable, Sendable {
         self.reviewDecision = reviewDecision
         self.hasConflict = hasConflict
         self.isDraft = isDraft
+        self.lastMessage = lastMessage
     }
 }
 

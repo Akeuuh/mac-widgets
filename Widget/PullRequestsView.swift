@@ -6,12 +6,22 @@ import WidgetKit
 struct PullRequestsView: View {
     let entry: Entry
 
+    @Environment(\.widgetFamily) private var family
+
+    private var capacity: Int {
+        switch family {
+        case .systemLarge: 5
+        case .systemExtraLarge: 10
+        default: 3
+        }
+    }
+
     var body: some View {
         switch entry.result {
         case .success(let content):
             VStack(alignment: .leading, spacing: 6) {
-                ForEach(content.pullRequests.prefix(3), id: \.url) { pullRequest in
-                    PullRequestRow(pullRequest: pullRequest)
+                ForEach(content.pullRequests.prefix(capacity), id: \.url) { pullRequest in
+                    PullRequestRow(pullRequest: pullRequest, showsLastMessage: family != .systemMedium)
                 }
                 Spacer(minLength: 0)
             }
@@ -26,6 +36,7 @@ struct PullRequestsView: View {
 
 struct PullRequestRow: View {
     let pullRequest: PullRequest
+    let showsLastMessage: Bool
 
     var body: some View {
         Link(destination: pullRequest.url) {
@@ -40,6 +51,12 @@ struct PullRequestRow: View {
                     Text(pullRequest.title)
                         .font(.callout)
                         .lineLimit(1)
+                    if showsLastMessage, let message = pullRequest.lastMessage {
+                        Text("\(Text(message.author).bold()) · \(message.excerpt) · \(message.date, format: .relative(presentation: .named))")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .lineLimit(1)
+                    }
                 }
                 Spacer(minLength: 0)
                 if pullRequest.hasConflict {
@@ -75,6 +92,18 @@ struct PullRequestRow: View {
 }
 
 #Preview(as: .systemMedium) {
+    PullRequestsWidget()
+} timeline: {
+    Entry(date: .now, result: .success(.placeholder))
+}
+
+#Preview(as: .systemLarge) {
+    PullRequestsWidget()
+} timeline: {
+    Entry(date: .now, result: .success(.placeholder))
+}
+
+#Preview(as: .systemExtraLarge) {
     PullRequestsWidget()
 } timeline: {
     Entry(date: .now, result: .success(.placeholder))
