@@ -69,6 +69,20 @@ public struct GitHubClient: Sendable {
             mergeable
             reviewDecision
             repository { nameWithOwner }
+            comments(last: 10) {
+              nodes { author { __typename login } body createdAt }
+            }
+            reviews(last: 10) {
+              nodes {
+                author { __typename login }
+                body
+                state
+                submittedAt
+                comments(last: 10) {
+                  nodes { author { __typename login } body createdAt }
+                }
+              }
+            }
             commits(last: 1) {
               nodes {
                 commit {

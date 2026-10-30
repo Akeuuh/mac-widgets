@@ -36,17 +36,18 @@ struct Provider: TimelineProvider {
 }
 
 extension WidgetContent {
-    static let placeholder = WidgetContent(login: "octocat", pullRequests: (1...3).map {
+    static let placeholder = WidgetContent(login: "octocat", pullRequests: (1...10).map {
         PullRequest(
             repository: "octocat/hello-world",
             number: $0,
             title: "Pull request \($0)",
             url: URL(string: "https://github.com/octocat/hello-world/pull/\($0)")!,
             updatedAt: .now,
-            ciState: [.success, .failure, .pending][$0 - 1],
-            reviewDecision: [.approved, .changesRequested, .pending][$0 - 1],
+            ciState: [.success, .failure, .pending][$0 % 3],
+            reviewDecision: [.approved, .changesRequested, .pending][$0 % 3],
             hasConflict: $0 == 2,
-            isDraft: $0 == 3
+            isDraft: $0 == 3,
+            lastMessage: Message(author: "alice", excerpt: "Tu peux regarder le cas des remises ?", date: .now.addingTimeInterval(-600))
         )
     })
 }

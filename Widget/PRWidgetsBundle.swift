@@ -16,6 +16,6 @@ struct PullRequestsWidget: Widget {
         }
         .configurationDisplayName("Pull requests")
         .description("Les PR ouvertes dont tu es l'auteur.")
-        .supportedFamilies([.systemMedium])
+        .supportedFamilies([.systemMedium, .systemLarge, .systemExtraLarge])
     }
 }
