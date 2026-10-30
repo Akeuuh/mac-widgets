@@ -53,3 +53,16 @@ struct MentionneOuAssigne {
         #expect(content.searchURL.absoluteString == "https://github.com/pulls?q=is:pr%20is:open%20involves:@me%20-author:@me")
     }
 }
+
+struct Depot {
+    let content = try! fixture("depot", scope: .repository("acme/api"))
+
+    @Test func toutesLesPRParActiviteRecenteSansActionRequise() {
+        #expect(content.pullRequests.map(\.number) == [303, 301, 302, 304])
+        #expect(content.pullRequests.allSatisfy { !$0.actionRequired })
+    }
+
+    @Test func plusNAutresOuvreLesPRDuDepot() {
+        #expect(content.searchURL.absoluteString == "https://github.com/acme/api/pulls")
+    }
+}

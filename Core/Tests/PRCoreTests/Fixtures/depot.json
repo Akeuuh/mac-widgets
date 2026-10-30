@@ -1,0 +1,150 @@
+{
+  "data": {
+    "viewer": {
+      "login": "octocat"
+    },
+    "search": {
+      "issueCount": 4,
+      "nodes": [
+        {
+          "number": 301,
+          "title": "Activité d'hier",
+          "url": "https://github.com/acme/api/pull/301",
+          "updatedAt": "2026-10-28T10:00:00Z",
+          "isDraft": false,
+          "mergeable": "MERGEABLE",
+          "reviewDecision": "REVIEW_REQUIRED",
+          "repository": {
+            "nameWithOwner": "acme/api"
+          },
+          "comments": {
+            "nodes": []
+          },
+          "reviews": {
+            "nodes": []
+          },
+          "timelineItems": {
+            "nodes": []
+          },
+          "commits": {
+            "nodes": [
+              {
+                "commit": {
+                  "statusCheckRollup": null
+                }
+              }
+            ]
+          }
+        },
+        {
+          "number": 302,
+          "title": "CI rouge et conflit",
+          "url": "https://github.com/acme/api/pull/302",
+          "updatedAt": "2026-10-27T10:00:00Z",
+          "isDraft": false,
+          "mergeable": "CONFLICTING",
+          "reviewDecision": "REVIEW_REQUIRED",
+          "repository": {
+            "nameWithOwner": "acme/api"
+          },
+          "comments": {
+            "nodes": []
+          },
+          "reviews": {
+            "nodes": []
+          },
+          "timelineItems": {
+            "nodes": []
+          },
+          "commits": {
+            "nodes": [
+              {
+                "commit": {
+                  "statusCheckRollup": {
+                    "contexts": {
+                      "nodes": [
+                        {
+                          "status": "COMPLETED",
+                          "conclusion": "FAILURE"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "number": 303,
+          "title": "Activité de ce matin",
+          "url": "https://github.com/acme/api/pull/303",
+          "updatedAt": "2026-10-29T08:00:00Z",
+          "isDraft": false,
+          "mergeable": "MERGEABLE",
+          "reviewDecision": "REVIEW_REQUIRED",
+          "repository": {
+            "nameWithOwner": "acme/api"
+          },
+          "comments": {
+            "nodes": [
+              {
+                "author": {
+                  "__typename": "User",
+                  "login": "alice"
+                },
+                "body": "Un avis ?",
+                "createdAt": "2026-10-29T08:00:00Z"
+              }
+            ]
+          },
+          "reviews": {
+            "nodes": []
+          },
+          "timelineItems": {
+            "nodes": []
+          },
+          "commits": {
+            "nodes": [
+              {
+                "commit": {
+                  "statusCheckRollup": null
+                }
+              }
+            ]
+          }
+        },
+        {
+          "number": 304,
+          "title": "Brouillon de la semaine dernière",
+          "url": "https://github.com/acme/api/pull/304",
+          "updatedAt": "2026-10-22T10:00:00Z",
+          "isDraft": true,
+          "mergeable": "MERGEABLE",
+          "reviewDecision": "REVIEW_REQUIRED",
+          "repository": {
+            "nameWithOwner": "acme/api"
+          },
+          "comments": {
+            "nodes": []
+          },
+          "reviews": {
+            "nodes": []
+          },
+          "timelineItems": {
+            "nodes": []
+          },
+          "commits": {
+            "nodes": [
+              {
+                "commit": {
+                  "statusCheckRollup": null
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
