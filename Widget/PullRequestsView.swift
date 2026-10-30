@@ -48,7 +48,7 @@ struct PullRequestsView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         case .failure(.missingToken):
-            Problem(message: "Ouvre PR Widgets pour enregistrer ton token GitHub.")
+            Problem(message: "Ouvre Mac Widgets pour enregistrer ton token GitHub.")
         case .failure(.invalidToken):
             Problem(message: "Token invalide")
         case .failure(.unavailable):

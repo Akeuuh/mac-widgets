@@ -1,11 +1,11 @@
 import SwiftUI
 
 @main
-struct PRWidgetsApp: App {
+struct MacWidgetsApp: App {
     @NSApplicationDelegateAdaptor private var appDelegate: AppDelegate
 
     var body: some Scene {
-        Window("PR Widgets", id: "token") {
+        Window("Mac Widgets", id: "token") {
             TokenView()
                 // macOS hands the URL of a clicked widget link to the containing app instead of the browser.
                 .onOpenURL { url in

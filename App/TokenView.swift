@@ -3,7 +3,7 @@ import SwiftUI
 import WidgetKit
 
 struct TokenView: View {
-    private static let newTokenURL = URL(string: "https://github.com/settings/tokens/new?scopes=repo,read:org&description=PR%20Widgets")!
+    private static let newTokenURL = URL(string: "https://github.com/settings/tokens/new?scopes=repo,read:org&description=Mac%20Widgets")!
 
     @State private var token = ""
     @State private var hasStoredToken = TokenStore.read() != nil

@@ -8,7 +8,7 @@
 	<true/>
 	<key>keychain-access-groups</key>
 	<array>
-		<string>$(AppIdentifierPrefix)io.github.akeuuh.PRWidgets</string>
+		<string>$(AppIdentifierPrefix)io.github.akeuuh.MacWidgets</string>
 	</array>
 </dict>
 </plist>
