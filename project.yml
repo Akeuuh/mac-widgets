@@ -1,0 +1,64 @@
+name: PRWidgets
+options:
+  bundleIdPrefix: io.github.akeuuh
+  deploymentTarget:
+    macOS: "14.0"
+settings:
+  base:
+    DEVELOPMENT_TEAM: MA2JT9VKAK
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    SWIFT_VERSION: "5.0"
+    ENABLE_HARDENED_RUNTIME: YES
+packages:
+  Core:
+    path: Core
+targets:
+  PRWidgets:
+    type: application
+    platform: macOS
+    sources: [App]
+    dependencies:
+      - target: PRWidgetsExtension
+      - package: Core
+        product: GitHubClient
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleDisplayName: PR Widgets
+        LSApplicationCategoryType: public.app-category.developer-tools
+    entitlements:
+      path: App/PRWidgets.entitlements
+      properties:
+        com.apple.security.app-sandbox: true
+        com.apple.security.network.client: true
+        keychain-access-groups:
+          - $(AppIdentifierPrefix)io.github.akeuuh.PRWidgets
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: io.github.akeuuh.PRWidgets
+  PRWidgetsExtension:
+    type: app-extension
+    platform: macOS
+    sources: [Widget]
+    dependencies:
+      - package: Core
+        product: PRCore
+      - package: Core
+        product: GitHubClient
+      - sdk: WidgetKit.framework
+      - sdk: SwiftUI.framework
+    info:
+      path: Widget/Info.plist
+      properties:
+        CFBundleDisplayName: PR Widgets
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    entitlements:
+      path: Widget/PRWidgetsExtension.entitlements
+      properties:
+        com.apple.security.app-sandbox: true
+        com.apple.security.network.client: true
+        keychain-access-groups:
+          - $(AppIdentifierPrefix)io.github.akeuuh.PRWidgets
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: io.github.akeuuh.PRWidgets.Widget
