@@ -1,6 +1,8 @@
 {
   "data": {
-    "viewer": { "login": "octocat" },
+    "viewer": {
+      "login": "octocat"
+    },
     "search": {
       "issueCount": 2,
       "nodes": [
@@ -9,14 +11,60 @@
           "title": "Ajoute la pagination des résultats",
           "url": "https://github.com/octocat/hello-world/pull/12",
           "updatedAt": "2026-10-28T09:00:00Z",
-          "repository": { "nameWithOwner": "octocat/hello-world" }
+          "isDraft": false,
+          "mergeable": "MERGEABLE",
+          "reviewDecision": "REVIEW_REQUIRED",
+          "repository": {
+            "nameWithOwner": "octocat/hello-world"
+          },
+          "commits": {
+            "nodes": [
+              {
+                "commit": {
+                  "statusCheckRollup": {
+                    "contexts": {
+                      "nodes": [
+                        {
+                          "status": "COMPLETED",
+                          "conclusion": "SUCCESS"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          }
         },
         {
           "number": 481,
           "title": "Corrige le calcul des taxes",
           "url": "https://github.com/acme/billing/pull/481",
           "updatedAt": "2026-10-29T16:30:00Z",
-          "repository": { "nameWithOwner": "acme/billing" }
+          "isDraft": false,
+          "mergeable": "MERGEABLE",
+          "reviewDecision": "REVIEW_REQUIRED",
+          "repository": {
+            "nameWithOwner": "acme/billing"
+          },
+          "commits": {
+            "nodes": [
+              {
+                "commit": {
+                  "statusCheckRollup": {
+                    "contexts": {
+                      "nodes": [
+                        {
+                          "status": "COMPLETED",
+                          "conclusion": "SUCCESS"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          }
         }
       ]
     }
