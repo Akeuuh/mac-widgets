@@ -19,7 +19,8 @@ xcodebuild -exportArchive -archivePath "$BUILD/PRWidgets.xcarchive" \
     -allowProvisioningUpdates
 
 hdiutil create -volname "PR Widgets" -srcfolder "$BUILD/export/PRWidgets.app" -ov -format UDZO "$DMG"
-codesign --sign "Developer ID Application" --timestamp "$DMG"
+codesign -d --extract-certificates="$BUILD/cert" "$BUILD/export/PRWidgets.app"
+codesign --sign "$(shasum "$BUILD/cert0" | cut -d' ' -f1)" --timestamp "$DMG"
 xcrun notarytool submit "$DMG" --keychain-profile "$NOTARY_PROFILE" --wait
 xcrun stapler staple "$DMG"
 
