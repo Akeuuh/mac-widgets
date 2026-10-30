@@ -22,8 +22,12 @@ Vocabulaire complet : [CONTEXT.md](CONTEXT.md).
 macOS 14 (Sonoma) ou plus récent.
 
 ```bash
-brew install --cask akeuuh/tap/mac-widgets
+brew tap Akeuuh/tap
+brew trust Akeuuh/tap
+brew install --cask mac-widgets
 ```
+
+`brew trust` n'est à faire qu'une fois : Homebrew demande une décision explicite avant d'installer depuis un tap tiers.
 
 Ou télécharge le DMG notarisé depuis les [Releases](https://github.com/Akeuuh/mac-widgets/releases).
 
