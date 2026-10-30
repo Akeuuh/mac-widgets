@@ -36,6 +36,7 @@ targets:
           - $(AppIdentifierPrefix)io.github.akeuuh.MacWidgets
     settings:
       PRODUCT_BUNDLE_IDENTIFIER: io.github.akeuuh.MacWidgets
+      ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
   MacWidgetsExtension:
     type: app-extension
     platform: macOS
