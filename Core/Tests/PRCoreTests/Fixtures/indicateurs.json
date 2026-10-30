@@ -17,6 +17,12 @@
           "repository": {
             "nameWithOwner": "acme/billing"
           },
+          "comments": {
+            "nodes": []
+          },
+          "reviews": {
+            "nodes": []
+          },
           "commits": {
             "nodes": [
               {
@@ -54,6 +60,12 @@
           "repository": {
             "nameWithOwner": "acme/billing"
           },
+          "comments": {
+            "nodes": []
+          },
+          "reviews": {
+            "nodes": []
+          },
           "commits": {
             "nodes": [
               {
@@ -88,6 +100,12 @@
           "repository": {
             "nameWithOwner": "acme/billing"
           },
+          "comments": {
+            "nodes": []
+          },
+          "reviews": {
+            "nodes": []
+          },
           "commits": {
             "nodes": [
               {
@@ -120,6 +138,12 @@
           "reviewDecision": "REVIEW_REQUIRED",
           "repository": {
             "nameWithOwner": "acme/billing"
+          },
+          "comments": {
+            "nodes": []
+          },
+          "reviews": {
+            "nodes": []
           },
           "commits": {
             "nodes": [
@@ -155,6 +179,12 @@
           "repository": {
             "nameWithOwner": "acme/billing"
           },
+          "comments": {
+            "nodes": []
+          },
+          "reviews": {
+            "nodes": []
+          },
           "commits": {
             "nodes": [
               {
@@ -189,6 +219,12 @@
           "repository": {
             "nameWithOwner": "acme/billing"
           },
+          "comments": {
+            "nodes": []
+          },
+          "reviews": {
+            "nodes": []
+          },
           "commits": {
             "nodes": [
               {
@@ -209,6 +245,12 @@
           "reviewDecision": "APPROVED",
           "repository": {
             "nameWithOwner": "acme/billing"
+          },
+          "comments": {
+            "nodes": []
+          },
+          "reviews": {
+            "nodes": []
           },
           "commits": {
             "nodes": [
@@ -231,6 +273,12 @@
           "repository": {
             "nameWithOwner": "acme/billing"
           },
+          "comments": {
+            "nodes": []
+          },
+          "reviews": {
+            "nodes": []
+          },
           "commits": {
             "nodes": [
               {
@@ -251,6 +299,12 @@
           "reviewDecision": null,
           "repository": {
             "nameWithOwner": "acme/billing"
+          },
+          "comments": {
+            "nodes": []
+          },
+          "reviews": {
+            "nodes": []
           },
           "commits": {
             "nodes": [
@@ -273,6 +327,12 @@
           "repository": {
             "nameWithOwner": "acme/billing"
           },
+          "comments": {
+            "nodes": []
+          },
+          "reviews": {
+            "nodes": []
+          },
           "commits": {
             "nodes": [
               {
@@ -294,6 +354,12 @@
           "repository": {
             "nameWithOwner": "acme/billing"
           },
+          "comments": {
+            "nodes": []
+          },
+          "reviews": {
+            "nodes": []
+          },
           "commits": {
             "nodes": [
               {
@@ -314,6 +380,12 @@
           "reviewDecision": "REVIEW_REQUIRED",
           "repository": {
             "nameWithOwner": "acme/billing"
+          },
+          "comments": {
+            "nodes": []
+          },
+          "reviews": {
+            "nodes": []
           },
           "commits": {
             "nodes": [

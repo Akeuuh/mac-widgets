@@ -1,0 +1,324 @@
+{
+  "data": {
+    "viewer": {
+      "login": "octocat"
+    },
+    "search": {
+      "issueCount": 7,
+      "nodes": [
+        {
+          "number": 1,
+          "title": "Message humain",
+          "url": "https://github.com/acme/billing/pull/1",
+          "updatedAt": "2026-10-29T10:00:00Z",
+          "isDraft": false,
+          "mergeable": "MERGEABLE",
+          "reviewDecision": "REVIEW_REQUIRED",
+          "repository": {
+            "nameWithOwner": "acme/billing"
+          },
+          "comments": {
+            "nodes": [
+              {
+                "author": {
+                  "__typename": "User",
+                  "login": "alice"
+                },
+                "body": "Tu peux regarder\nle cas des remises ?",
+                "createdAt": "2026-10-29T09:00:00Z"
+              }
+            ]
+          },
+          "reviews": {
+            "nodes": []
+          },
+          "commits": {
+            "nodes": [
+              {
+                "commit": {
+                  "statusCheckRollup": null
+                }
+              }
+            ]
+          }
+        },
+        {
+          "number": 2,
+          "title": "Message de bot seul",
+          "url": "https://github.com/acme/billing/pull/2",
+          "updatedAt": "2026-10-29T10:00:00Z",
+          "isDraft": false,
+          "mergeable": "MERGEABLE",
+          "reviewDecision": "REVIEW_REQUIRED",
+          "repository": {
+            "nameWithOwner": "acme/billing"
+          },
+          "comments": {
+            "nodes": [
+              {
+                "author": {
+                  "__typename": "Bot",
+                  "login": "codecov"
+                },
+                "body": "Coverage 87%",
+                "createdAt": "2026-10-29T09:00:00Z"
+              }
+            ]
+          },
+          "reviews": {
+            "nodes": []
+          },
+          "commits": {
+            "nodes": [
+              {
+                "commit": {
+                  "statusCheckRollup": null
+                }
+              }
+            ]
+          }
+        },
+        {
+          "number": 3,
+          "title": "Approbation sans texte",
+          "url": "https://github.com/acme/billing/pull/3",
+          "updatedAt": "2026-10-29T10:00:00Z",
+          "isDraft": false,
+          "mergeable": "MERGEABLE",
+          "reviewDecision": "REVIEW_REQUIRED",
+          "repository": {
+            "nameWithOwner": "acme/billing"
+          },
+          "comments": {
+            "nodes": []
+          },
+          "reviews": {
+            "nodes": [
+              {
+                "author": {
+                  "__typename": "User",
+                  "login": "bob"
+                },
+                "body": "",
+                "state": "APPROVED",
+                "submittedAt": "2026-10-29T09:00:00Z",
+                "comments": {
+                  "nodes": []
+                }
+              }
+            ]
+          },
+          "commits": {
+            "nodes": [
+              {
+                "commit": {
+                  "statusCheckRollup": null
+                }
+              }
+            ]
+          }
+        },
+        {
+          "number": 4,
+          "title": "Commentaire inline plus récent",
+          "url": "https://github.com/acme/billing/pull/4",
+          "updatedAt": "2026-10-29T10:00:00Z",
+          "isDraft": false,
+          "mergeable": "MERGEABLE",
+          "reviewDecision": "REVIEW_REQUIRED",
+          "repository": {
+            "nameWithOwner": "acme/billing"
+          },
+          "comments": {
+            "nodes": [
+              {
+                "author": {
+                  "__typename": "User",
+                  "login": "alice"
+                },
+                "body": "Globalement ok",
+                "createdAt": "2026-10-29T08:00:00Z"
+              }
+            ]
+          },
+          "reviews": {
+            "nodes": [
+              {
+                "author": {
+                  "__typename": "User",
+                  "login": "bob"
+                },
+                "body": "",
+                "state": "COMMENTED",
+                "submittedAt": "2026-10-29T09:30:00Z",
+                "comments": {
+                  "nodes": [
+                    {
+                      "author": {
+                        "__typename": "User",
+                        "login": "bob"
+                      },
+                      "body": "Ce nom de variable prête à confusion",
+                      "createdAt": "2026-10-29T09:29:00Z"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "commits": {
+            "nodes": [
+              {
+                "commit": {
+                  "statusCheckRollup": null
+                }
+              }
+            ]
+          }
+        },
+        {
+          "number": 5,
+          "title": "Bot plus récent qu'un humain",
+          "url": "https://github.com/acme/billing/pull/5",
+          "updatedAt": "2026-10-29T10:00:00Z",
+          "isDraft": false,
+          "mergeable": "MERGEABLE",
+          "reviewDecision": "REVIEW_REQUIRED",
+          "repository": {
+            "nameWithOwner": "acme/billing"
+          },
+          "comments": {
+            "nodes": [
+              {
+                "author": {
+                  "__typename": "User",
+                  "login": "alice"
+                },
+                "body": "Je relis demain",
+                "createdAt": "2026-10-29T08:00:00Z"
+              },
+              {
+                "author": {
+                  "__typename": "Bot",
+                  "login": "github-actions"
+                },
+                "body": "Deploy preview ready",
+                "createdAt": "2026-10-29T09:00:00Z"
+              }
+            ]
+          },
+          "reviews": {
+            "nodes": []
+          },
+          "commits": {
+            "nodes": [
+              {
+                "commit": {
+                  "statusCheckRollup": null
+                }
+              }
+            ]
+          }
+        },
+        {
+          "number": 6,
+          "title": "Review avec texte",
+          "url": "https://github.com/acme/billing/pull/6",
+          "updatedAt": "2026-10-29T10:00:00Z",
+          "isDraft": false,
+          "mergeable": "MERGEABLE",
+          "reviewDecision": "REVIEW_REQUIRED",
+          "repository": {
+            "nameWithOwner": "acme/billing"
+          },
+          "comments": {
+            "nodes": []
+          },
+          "reviews": {
+            "nodes": [
+              {
+                "author": {
+                  "__typename": "User",
+                  "login": "carol"
+                },
+                "body": "Il manque les tests",
+                "state": "CHANGES_REQUESTED",
+                "submittedAt": "2026-10-29T09:00:00Z",
+                "comments": {
+                  "nodes": []
+                }
+              }
+            ]
+          },
+          "commits": {
+            "nodes": [
+              {
+                "commit": {
+                  "statusCheckRollup": null
+                }
+              }
+            ]
+          }
+        },
+        {
+          "number": 7,
+          "title": "Review en attente de l'utilisateur",
+          "url": "https://github.com/acme/billing/pull/7",
+          "updatedAt": "2026-10-29T10:00:00Z",
+          "isDraft": false,
+          "mergeable": "MERGEABLE",
+          "reviewDecision": "REVIEW_REQUIRED",
+          "repository": {
+            "nameWithOwner": "acme/billing"
+          },
+          "comments": {
+            "nodes": [
+              {
+                "author": {
+                  "__typename": "User",
+                  "login": "alice"
+                },
+                "body": "Une question",
+                "createdAt": "2026-10-29T08:00:00Z"
+              }
+            ]
+          },
+          "reviews": {
+            "nodes": [
+              {
+                "author": {
+                  "__typename": "User",
+                  "login": "octocat"
+                },
+                "body": "",
+                "state": "PENDING",
+                "submittedAt": null,
+                "comments": {
+                  "nodes": [
+                    {
+                      "author": {
+                        "__typename": "User",
+                        "login": "octocat"
+                      },
+                      "body": "Brouillon",
+                      "createdAt": "2026-10-29T09:00:00Z"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "commits": {
+            "nodes": [
+              {
+                "commit": {
+                  "statusCheckRollup": null
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
