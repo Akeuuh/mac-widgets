@@ -3,13 +3,19 @@ import PRCore
 import WidgetKit
 
 struct Entry: TimelineEntry {
+    enum State {
+        case content(WidgetContent)
+        case failure(GitHubError)
+        case missingRepository
+    }
+
     let date: Date
-    let result: Result<WidgetContent, GitHubError>
+    let state: State
 }
 
 struct Provider: AppIntentTimelineProvider {
     func placeholder(in context: Context) -> Entry {
-        Entry(date: .now, result: .success(.placeholder))
+        Entry(date: .now, state: .content(.placeholder))
     }
 
     func snapshot(for configuration: ConfigurationIntent, in context: Context) async -> Entry {
@@ -17,14 +23,14 @@ struct Provider: AppIntentTimelineProvider {
     }
 
     func timeline(for configuration: ConfigurationIntent, in context: Context) async -> Timeline<Entry> {
-        let entry = Entry(date: .now, result: await load(configuration.scope.scope))
-        return Timeline(entries: [entry], policy: .after(.now.addingTimeInterval(15 * 60)))
+        let state = if let scope = configuration.resolvedScope { await load(scope) } else { Entry.State.missingRepository }
+        return Timeline(entries: [Entry(date: .now, state: state)], policy: .after(.now.addingTimeInterval(15 * 60)))
     }
 
-    private func load(_ scope: Scope) async -> Result<WidgetContent, GitHubError> {
+    private func load(_ scope: Scope) async -> Entry.State {
         do {
             let response = try await GitHubClient.fromKeychain().search(scope)
-            return .success(try makeContent(from: response, scope: scope))
+            return .content(try makeContent(from: response, scope: scope))
         } catch let error as GitHubError {
             return .failure(error)
         } catch {

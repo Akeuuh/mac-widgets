@@ -17,8 +17,8 @@ struct PullRequestsView: View {
     }
 
     var body: some View {
-        switch entry.result {
-        case .success(let content):
+        switch entry.state {
+        case .content(let content):
             VStack(alignment: .leading, spacing: 6) {
                 ForEach(content.pullRequests.prefix(capacity), id: \.url) { pullRequest in
                     PullRequestRow(pullRequest: pullRequest, showsLastMessage: family != .systemMedium)
@@ -36,6 +36,8 @@ struct PullRequestsView: View {
             Text("Ouvre PR Widgets pour enregistrer ton token GitHub.")
         case .failure:
             Text("GitHub injoignable")
+        case .missingRepository:
+            Text("Choisis un dépôt : clic droit → Modifier le widget.")
         }
     }
 }
@@ -100,17 +102,17 @@ struct PullRequestRow: View {
 #Preview(as: .systemMedium) {
     PullRequestsWidget()
 } timeline: {
-    Entry(date: .now, result: .success(.placeholder))
+    Entry(date: .now, state: .content(.placeholder))
 }
 
 #Preview(as: .systemLarge) {
     PullRequestsWidget()
 } timeline: {
-    Entry(date: .now, result: .success(.placeholder))
+    Entry(date: .now, state: .content(.placeholder))
 }
 
 #Preview(as: .systemExtraLarge) {
     PullRequestsWidget()
 } timeline: {
-    Entry(date: .now, result: .success(.placeholder))
+    Entry(date: .now, state: .content(.placeholder))
 }

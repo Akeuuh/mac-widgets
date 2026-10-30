@@ -25,7 +25,7 @@ public func makeContent(from response: Data, scope: Scope) throws -> WidgetConte
     let pullRequests = switch scope {
     case .reviewRequested:
         items.sorted(by: readyThenLongestWaiting).map(\.pullRequest)
-    case .myPullRequests, .involved:
+    case .myPullRequests, .involved, .repository:
         items.map(\.pullRequest).sorted(by: actionRequiredThenRecentActivity)
     }
     return WidgetContent(
@@ -46,7 +46,7 @@ private func isActionRequired(_ pullRequest: PullRequest, scope: Scope, login: S
             || lastMessageFromSomeoneElse
     case .involved:
         return lastMessageFromSomeoneElse
-    case .reviewRequested:
+    case .reviewRequested, .repository:
         return false
     }
 }
