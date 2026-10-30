@@ -4,7 +4,7 @@ cask "mac-widgets" do
 
   url "https://github.com/Akeuuh/mac-widgets/releases/download/v#{version}/MacWidgets-#{version}.dmg"
   name "Mac Widgets"
-  desc "Native macOS widgets to follow GitHub pull requests at a glance"
+  desc "Widgets to follow GitHub pull requests at a glance"
   homepage "https://github.com/Akeuuh/mac-widgets"
 
   livecheck do
