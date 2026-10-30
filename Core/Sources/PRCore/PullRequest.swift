@@ -31,6 +31,7 @@ public struct PullRequest: Equatable, Sendable {
     public let hasConflict: Bool
     public let isDraft: Bool
     public let lastMessage: Message?
+    public internal(set) var actionRequired = false
 
     public init(
         repository: String,
@@ -60,9 +61,17 @@ public struct PullRequest: Equatable, Sendable {
 public struct WidgetContent: Equatable, Sendable {
     public let login: String
     public let pullRequests: [PullRequest]
+    public let totalCount: Int
+    public let searchURL: URL
 
-    public init(login: String, pullRequests: [PullRequest]) {
+    public init(login: String, pullRequests: [PullRequest], totalCount: Int, searchURL: URL) {
         self.login = login
         self.pullRequests = pullRequests
+        self.totalCount = totalCount
+        self.searchURL = searchURL
+    }
+
+    public func hiddenCount(showing capacity: Int) -> Int {
+        totalCount - min(capacity, pullRequests.count)
     }
 }

@@ -1,12 +1,13 @@
 import Foundation
 
-public func makeContent(from response: Data) throws -> WidgetContent {
+public func makeContent(from response: Data, scope: Scope) throws -> WidgetContent {
     let decoder = JSONDecoder()
     decoder.dateDecodingStrategy = .iso8601
     let payload = try decoder.decode(SearchResponse.self, from: response).data
 
+    let login = payload.viewer.login
     let pullRequests = payload.search.nodes.map { node in
-        PullRequest(
+        var pullRequest = PullRequest(
             repository: node.repository.nameWithOwner,
             number: node.number,
             title: node.title,
@@ -18,11 +19,27 @@ public func makeContent(from response: Data) throws -> WidgetContent {
             isDraft: node.isDraft,
             lastMessage: lastMessage(of: node)
         )
+        pullRequest.actionRequired = isActionRequired(pullRequest, login: login)
+        return pullRequest
     }
     return WidgetContent(
-        login: payload.viewer.login,
-        pullRequests: pullRequests.sorted { $0.updatedAt > $1.updatedAt }
+        login: login,
+        pullRequests: pullRequests.sorted(by: actionRequiredThenRecentActivity),
+        totalCount: payload.search.issueCount,
+        searchURL: scope.searchURL
     )
+}
+
+private func isActionRequired(_ pullRequest: PullRequest, login: String) -> Bool {
+    pullRequest.ciState == .failure
+        || pullRequest.reviewDecision == .changesRequested
+        || pullRequest.hasConflict
+        || pullRequest.lastMessage.map { $0.author != login } ?? false
+}
+
+private func actionRequiredThenRecentActivity(_ lhs: PullRequest, _ rhs: PullRequest) -> Bool {
+    if lhs.actionRequired != rhs.actionRequired { return lhs.actionRequired }
+    return lhs.updatedAt > rhs.updatedAt
 }
 
 private func ciState(of checks: [SearchResponse.Check]) -> CIState {
