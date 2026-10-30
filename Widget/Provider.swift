@@ -42,7 +42,11 @@ extension WidgetContent {
             number: $0,
             title: "Pull request \($0)",
             url: URL(string: "https://github.com/octocat/hello-world/pull/\($0)")!,
-            updatedAt: .now
+            updatedAt: .now,
+            ciState: [.success, .failure, .pending][$0 - 1],
+            reviewDecision: [.approved, .changesRequested, .pending][$0 - 1],
+            hasConflict: $0 == 2,
+            isDraft: $0 == 3
         )
     })
 }

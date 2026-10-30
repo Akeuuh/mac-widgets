@@ -65,7 +65,24 @@ public struct GitHubClient: Sendable {
             title
             url
             updatedAt
+            isDraft
+            mergeable
+            reviewDecision
             repository { nameWithOwner }
+            commits(last: 1) {
+              nodes {
+                commit {
+                  statusCheckRollup {
+                    contexts(first: 100) {
+                      nodes {
+                        ... on CheckRun { status conclusion }
+                        ... on StatusContext { state }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }

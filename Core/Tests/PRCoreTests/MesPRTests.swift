@@ -2,7 +2,7 @@ import Testing
 import PRCore
 
 @Test func lesPRPersoEtOrganisationsApparaissentEnsemble() throws {
-    let content = try content("mes-pr")
+    let content = try fixture("mes-pr")
 
     #expect(content.login == "octocat")
     #expect(content.pullRequests.map(\.repository) == ["acme/billing", "octocat/hello-world"])
