@@ -1,0 +1,294 @@
+{
+  "data": {
+    "viewer": {
+      "login": "octocat"
+    },
+    "search": {
+      "issueCount": 8,
+      "nodes": [
+        {
+          "number": 1,
+          "title": "Rien à faire",
+          "url": "https://github.com/acme/billing/pull/1",
+          "updatedAt": "2026-10-29T05:00:00Z",
+          "isDraft": false,
+          "mergeable": "MERGEABLE",
+          "reviewDecision": "REVIEW_REQUIRED",
+          "repository": {
+            "nameWithOwner": "acme/billing"
+          },
+          "comments": {
+            "nodes": [
+              {
+                "author": {
+                  "__typename": "User",
+                  "login": "octocat"
+                },
+                "body": "Prête pour relecture",
+                "createdAt": "2026-10-29T04:00:00Z"
+              }
+            ]
+          },
+          "reviews": {
+            "nodes": []
+          },
+          "commits": {
+            "nodes": [
+              {
+                "commit": {
+                  "statusCheckRollup": {
+                    "contexts": {
+                      "nodes": [
+                        {
+                          "status": "COMPLETED",
+                          "conclusion": "SUCCESS"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "number": 2,
+          "title": "CI en échec",
+          "url": "https://github.com/acme/billing/pull/2",
+          "updatedAt": "2026-10-29T01:00:00Z",
+          "isDraft": false,
+          "mergeable": "MERGEABLE",
+          "reviewDecision": "REVIEW_REQUIRED",
+          "repository": {
+            "nameWithOwner": "acme/billing"
+          },
+          "comments": {
+            "nodes": []
+          },
+          "reviews": {
+            "nodes": []
+          },
+          "commits": {
+            "nodes": [
+              {
+                "commit": {
+                  "statusCheckRollup": {
+                    "contexts": {
+                      "nodes": [
+                        {
+                          "status": "COMPLETED",
+                          "conclusion": "FAILURE"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "number": 3,
+          "title": "Changements demandés",
+          "url": "https://github.com/acme/billing/pull/3",
+          "updatedAt": "2026-10-29T02:00:00Z",
+          "isDraft": false,
+          "mergeable": "MERGEABLE",
+          "reviewDecision": "CHANGES_REQUESTED",
+          "repository": {
+            "nameWithOwner": "acme/billing"
+          },
+          "comments": {
+            "nodes": []
+          },
+          "reviews": {
+            "nodes": []
+          },
+          "commits": {
+            "nodes": [
+              {
+                "commit": {
+                  "statusCheckRollup": null
+                }
+              }
+            ]
+          }
+        },
+        {
+          "number": 4,
+          "title": "Conflit",
+          "url": "https://github.com/acme/billing/pull/4",
+          "updatedAt": "2026-10-29T03:00:00Z",
+          "isDraft": false,
+          "mergeable": "CONFLICTING",
+          "reviewDecision": "REVIEW_REQUIRED",
+          "repository": {
+            "nameWithOwner": "acme/billing"
+          },
+          "comments": {
+            "nodes": []
+          },
+          "reviews": {
+            "nodes": []
+          },
+          "commits": {
+            "nodes": [
+              {
+                "commit": {
+                  "statusCheckRollup": null
+                }
+              }
+            ]
+          }
+        },
+        {
+          "number": 5,
+          "title": "Message d'un relecteur",
+          "url": "https://github.com/acme/billing/pull/5",
+          "updatedAt": "2026-10-29T04:00:00Z",
+          "isDraft": false,
+          "mergeable": "MERGEABLE",
+          "reviewDecision": "REVIEW_REQUIRED",
+          "repository": {
+            "nameWithOwner": "acme/billing"
+          },
+          "comments": {
+            "nodes": [
+              {
+                "author": {
+                  "__typename": "User",
+                  "login": "alice"
+                },
+                "body": "Pourquoi ce changement ?",
+                "createdAt": "2026-10-29T04:00:00Z"
+              }
+            ]
+          },
+          "reviews": {
+            "nodes": []
+          },
+          "commits": {
+            "nodes": [
+              {
+                "commit": {
+                  "statusCheckRollup": null
+                }
+              }
+            ]
+          }
+        },
+        {
+          "number": 6,
+          "title": "Mon propre message",
+          "url": "https://github.com/acme/billing/pull/6",
+          "updatedAt": "2026-10-29T06:00:00Z",
+          "isDraft": false,
+          "mergeable": "MERGEABLE",
+          "reviewDecision": "REVIEW_REQUIRED",
+          "repository": {
+            "nameWithOwner": "acme/billing"
+          },
+          "comments": {
+            "nodes": [
+              {
+                "author": {
+                  "__typename": "User",
+                  "login": "alice"
+                },
+                "body": "Pourquoi ?",
+                "createdAt": "2026-10-29T05:00:00Z"
+              },
+              {
+                "author": {
+                  "__typename": "User",
+                  "login": "octocat"
+                },
+                "body": "Voir le ticket",
+                "createdAt": "2026-10-29T05:30:00Z"
+              }
+            ]
+          },
+          "reviews": {
+            "nodes": []
+          },
+          "commits": {
+            "nodes": [
+              {
+                "commit": {
+                  "statusCheckRollup": null
+                }
+              }
+            ]
+          }
+        },
+        {
+          "number": 7,
+          "title": "Approbation sans texte",
+          "url": "https://github.com/acme/billing/pull/7",
+          "updatedAt": "2026-10-29T07:00:00Z",
+          "isDraft": false,
+          "mergeable": "MERGEABLE",
+          "reviewDecision": "APPROVED",
+          "repository": {
+            "nameWithOwner": "acme/billing"
+          },
+          "comments": {
+            "nodes": []
+          },
+          "reviews": {
+            "nodes": [
+              {
+                "author": {
+                  "__typename": "User",
+                  "login": "bob"
+                },
+                "body": "",
+                "state": "APPROVED",
+                "submittedAt": "2026-10-29T07:00:00Z",
+                "comments": {
+                  "nodes": []
+                }
+              }
+            ]
+          },
+          "commits": {
+            "nodes": [
+              {
+                "commit": {
+                  "statusCheckRollup": null
+                }
+              }
+            ]
+          }
+        },
+        {
+          "number": 8,
+          "title": "Ancienne PR calme",
+          "url": "https://github.com/acme/billing/pull/8",
+          "updatedAt": "2026-10-20T00:00:00Z",
+          "isDraft": false,
+          "mergeable": "MERGEABLE",
+          "reviewDecision": "REVIEW_REQUIRED",
+          "repository": {
+            "nameWithOwner": "acme/billing"
+          },
+          "comments": {
+            "nodes": []
+          },
+          "reviews": {
+            "nodes": []
+          },
+          "commits": {
+            "nodes": [
+              {
+                "commit": {
+                  "statusCheckRollup": null
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

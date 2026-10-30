@@ -3,7 +3,7 @@ import PRCore
 
 func fixture(_ name: String) throws -> WidgetContent {
     let url = Bundle.module.url(forResource: name, withExtension: "json", subdirectory: "Fixtures")!
-    return try makeContent(from: Data(contentsOf: url))
+    return try makeContent(from: Data(contentsOf: url), scope: .myPullRequests)
 }
 
 extension WidgetContent {

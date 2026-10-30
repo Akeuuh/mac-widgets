@@ -24,6 +24,12 @@ struct PullRequestsView: View {
                     PullRequestRow(pullRequest: pullRequest, showsLastMessage: family != .systemMedium)
                 }
                 Spacer(minLength: 0)
+                let hidden = content.hiddenCount(showing: capacity)
+                if hidden > 0 {
+                    Link("+\(hidden) autres", destination: content.searchURL)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         case .failure(.missingToken):

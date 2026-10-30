@@ -8,4 +8,10 @@ public enum Scope: Hashable, Sendable {
         case .myPullRequests: "is:pr is:open author:@me"
         }
     }
+
+    public var searchURL: URL {
+        var components = URLComponents(string: "https://github.com/pulls")!
+        components.queryItems = [URLQueryItem(name: "q", value: searchQuery)]
+        return components.url!
+    }
 }

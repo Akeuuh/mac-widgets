@@ -26,7 +26,7 @@ struct Provider: TimelineProvider {
     private func load() async -> Result<WidgetContent, GitHubError> {
         do {
             let response = try await GitHubClient.fromKeychain().search(.myPullRequests)
-            return .success(try makeContent(from: response))
+            return .success(try makeContent(from: response, scope: .myPullRequests))
         } catch let error as GitHubError {
             return .failure(error)
         } catch {
@@ -36,18 +36,25 @@ struct Provider: TimelineProvider {
 }
 
 extension WidgetContent {
-    static let placeholder = WidgetContent(login: "octocat", pullRequests: (1...10).map {
+    static let placeholder = WidgetContent(
+        login: "octocat",
+        pullRequests: (1...10).map(placeholderPullRequest),
+        totalCount: 12,
+        searchURL: Scope.myPullRequests.searchURL
+    )
+
+    private static func placeholderPullRequest(_ number: Int) -> PullRequest {
         PullRequest(
             repository: "octocat/hello-world",
-            number: $0,
-            title: "Pull request \($0)",
-            url: URL(string: "https://github.com/octocat/hello-world/pull/\($0)")!,
+            number: number,
+            title: "Pull request \(number)",
+            url: URL(string: "https://github.com/octocat/hello-world/pull/\(number)")!,
             updatedAt: .now,
-            ciState: [.success, .failure, .pending][$0 % 3],
-            reviewDecision: [.approved, .changesRequested, .pending][$0 % 3],
-            hasConflict: $0 == 2,
-            isDraft: $0 == 3,
+            ciState: [.success, .failure, .pending][number % 3],
+            reviewDecision: [.approved, .changesRequested, .pending][number % 3],
+            hasConflict: number == 2,
+            isDraft: number == 3,
             lastMessage: Message(author: "alice", excerpt: "Tu peux regarder le cas des remises ?", date: .now.addingTimeInterval(-600))
         )
-    })
+    }
 }
