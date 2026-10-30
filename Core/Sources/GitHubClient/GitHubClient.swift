@@ -30,11 +30,32 @@ public struct GitHubClient: Sendable {
         return try JSONDecoder().decode(Response.self, from: data).data.viewer.login
     }
 
+    /// Every repository the token can read, personal and from organizations, most recently pushed first.
+    public func repositories() async throws -> [String] {
+        struct Response: Decodable {
+            struct Payload: Decodable { let viewer: Viewer }
+            struct Viewer: Decodable { let repositories: Repositories }
+            struct Repositories: Decodable { let nodes: [Repository]; let pageInfo: PageInfo }
+            struct Repository: Decodable { let nameWithOwner: String }
+            struct PageInfo: Decodable { let hasNextPage: Bool; let endCursor: String? }
+            let data: Payload
+        }
+        var names: [String] = []
+        var cursor: String?
+        repeat {
+            let data = try await graphQL(Self.repositoriesQuery, variables: ["after": cursor.map { $0 as Any } ?? NSNull()])
+            let repositories = try JSONDecoder().decode(Response.self, from: data).data.viewer.repositories
+            names += repositories.nodes.map(\.nameWithOwner)
+            cursor = repositories.pageInfo.hasNextPage ? repositories.pageInfo.endCursor : nil
+        } while cursor != nil
+        return names
+    }
+
     public func search(_ scope: Scope) async throws -> Data {
         try await graphQL(Self.searchQuery, variables: ["query": scope.searchQuery])
     }
 
-    private func graphQL(_ query: String, variables: [String: String]) async throws -> Data {
+    private func graphQL(_ query: String, variables: [String: Any]) async throws -> Data {
         var request = URLRequest(url: Self.endpoint)
         request.httpMethod = "POST"
         request.setValue("bearer \(token)", forHTTPHeaderField: "Authorization")
@@ -53,6 +74,19 @@ public struct GitHubClient: Sendable {
         default: throw GitHubError.unavailable
         }
     }
+
+    private static let repositoriesQuery = """
+    query($after: String) {
+      viewer {
+        repositories(first: 100, after: $after, affiliations: [OWNER, COLLABORATOR, ORGANIZATION_MEMBER],
+                     ownerAffiliations: [OWNER, COLLABORATOR, ORGANIZATION_MEMBER],
+                     orderBy: {field: PUSHED_AT, direction: DESC}) {
+          nodes { nameWithOwner }
+          pageInfo { hasNextPage endCursor }
+        }
+      }
+    }
+    """
 
     private static let searchQuery = """
     query($query: String!) {
