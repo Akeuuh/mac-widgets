@@ -10,12 +10,12 @@ struct PRWidgetsBundle: WidgetBundle {
 
 struct PullRequestsWidget: Widget {
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: "PullRequests", provider: Provider()) { entry in
+        AppIntentConfiguration(kind: "PullRequests", intent: ConfigurationIntent.self, provider: Provider()) { entry in
             PullRequestsView(entry: entry)
                 .containerBackground(.fill.tertiary, for: .widget)
         }
         .configurationDisplayName("Pull requests")
-        .description("Les PR ouvertes dont tu es l'auteur.")
+        .description("Les PR ouvertes d'un Périmètre : Mes PR, Revues demandées ou Mentionné ou assigné.")
         .supportedFamilies([.systemMedium, .systemLarge, .systemExtraLarge])
     }
 }

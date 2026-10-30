@@ -6,7 +6,7 @@ public func makeContent(from response: Data, scope: Scope) throws -> WidgetConte
     let payload = try decoder.decode(SearchResponse.self, from: response).data
 
     let login = payload.viewer.login
-    let pullRequests = payload.search.nodes.map { node in
+    let items = payload.search.nodes.map { node in
         var pullRequest = PullRequest(
             repository: node.repository.nameWithOwner,
             number: node.number,
@@ -19,22 +19,55 @@ public func makeContent(from response: Data, scope: Scope) throws -> WidgetConte
             isDraft: node.isDraft,
             lastMessage: lastMessage(of: node)
         )
-        pullRequest.actionRequired = isActionRequired(pullRequest, login: login)
-        return pullRequest
+        pullRequest.actionRequired = isActionRequired(pullRequest, scope: scope, login: login)
+        return (pullRequest: pullRequest, reviewRequestedAt: reviewRequestedAt(of: node, login: login))
+    }
+    let pullRequests = switch scope {
+    case .reviewRequested:
+        items.sorted(by: readyThenLongestWaiting).map(\.pullRequest)
+    case .myPullRequests, .involved:
+        items.map(\.pullRequest).sorted(by: actionRequiredThenRecentActivity)
     }
     return WidgetContent(
         login: login,
-        pullRequests: pullRequests.sorted(by: actionRequiredThenRecentActivity),
+        pullRequests: pullRequests,
         totalCount: payload.search.issueCount,
         searchURL: scope.searchURL
     )
 }
 
-private func isActionRequired(_ pullRequest: PullRequest, login: String) -> Bool {
-    pullRequest.ciState == .failure
-        || pullRequest.reviewDecision == .changesRequested
-        || pullRequest.hasConflict
-        || pullRequest.lastMessage.map { $0.author != login } ?? false
+private func isActionRequired(_ pullRequest: PullRequest, scope: Scope, login: String) -> Bool {
+    let lastMessageFromSomeoneElse = pullRequest.lastMessage.map { $0.author != login } ?? false
+    switch scope {
+    case .myPullRequests:
+        return pullRequest.ciState == .failure
+            || pullRequest.reviewDecision == .changesRequested
+            || pullRequest.hasConflict
+            || lastMessageFromSomeoneElse
+    case .involved:
+        return lastMessageFromSomeoneElse
+    case .reviewRequested:
+        return false
+    }
+}
+
+private func readyThenLongestWaiting(
+    _ lhs: (pullRequest: PullRequest, reviewRequestedAt: Date?),
+    _ rhs: (pullRequest: PullRequest, reviewRequestedAt: Date?)
+) -> Bool {
+    let lhsReady = isReadyForReview(lhs.pullRequest)
+    if lhsReady != isReadyForReview(rhs.pullRequest) { return lhsReady }
+    return (lhs.reviewRequestedAt ?? .distantFuture) < (rhs.reviewRequestedAt ?? .distantFuture)
+}
+
+private func isReadyForReview(_ pullRequest: PullRequest) -> Bool {
+    pullRequest.ciState != .failure && !pullRequest.hasConflict
+}
+
+/// The latest request addressed to the user, else the latest one (a team the user belongs to).
+private func reviewRequestedAt(of node: SearchResponse.Node, login: String) -> Date? {
+    let requests = node.timelineItems.nodes
+    return (requests.last { $0.requestedReviewer?.login == login } ?? requests.last)?.createdAt
 }
 
 private func actionRequiredThenRecentActivity(_ lhs: PullRequest, _ rhs: PullRequest) -> Bool {
