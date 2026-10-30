@@ -7,26 +7,24 @@ struct Entry: TimelineEntry {
     let result: Result<WidgetContent, GitHubError>
 }
 
-struct Provider: TimelineProvider {
+struct Provider: AppIntentTimelineProvider {
     func placeholder(in context: Context) -> Entry {
         Entry(date: .now, result: .success(.placeholder))
     }
 
-    func getSnapshot(in context: Context, completion: @escaping (Entry) -> Void) {
-        completion(placeholder(in: context))
+    func snapshot(for configuration: ConfigurationIntent, in context: Context) async -> Entry {
+        placeholder(in: context)
     }
 
-    func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
-        Task {
-            let entry = Entry(date: .now, result: await load())
-            completion(Timeline(entries: [entry], policy: .after(.now.addingTimeInterval(15 * 60))))
-        }
+    func timeline(for configuration: ConfigurationIntent, in context: Context) async -> Timeline<Entry> {
+        let entry = Entry(date: .now, result: await load(configuration.scope.scope))
+        return Timeline(entries: [entry], policy: .after(.now.addingTimeInterval(15 * 60)))
     }
 
-    private func load() async -> Result<WidgetContent, GitHubError> {
+    private func load(_ scope: Scope) async -> Result<WidgetContent, GitHubError> {
         do {
-            let response = try await GitHubClient.fromKeychain().search(.myPullRequests)
-            return .success(try makeContent(from: response, scope: .myPullRequests))
+            let response = try await GitHubClient.fromKeychain().search(scope)
+            return .success(try makeContent(from: response, scope: scope))
         } catch let error as GitHubError {
             return .failure(error)
         } catch {

@@ -29,6 +29,20 @@ struct SearchResponse: Decodable {
         let commits: Commits
         let comments: Comments
         let reviews: Reviews
+        let timelineItems: TimelineItems
+    }
+
+    struct TimelineItems: Decodable {
+        let nodes: [ReviewRequest]
+    }
+
+    struct ReviewRequest: Decodable {
+        let createdAt: Date
+        let requestedReviewer: Reviewer?
+    }
+
+    struct Reviewer: Decodable {
+        let login: String?
     }
 
     struct Author: Decodable {

@@ -83,6 +83,14 @@ public struct GitHubClient: Sendable {
                 }
               }
             }
+            timelineItems(itemTypes: [REVIEW_REQUESTED_EVENT], last: 20) {
+              nodes {
+                ... on ReviewRequestedEvent {
+                  createdAt
+                  requestedReviewer { ... on User { login } }
+                }
+              }
+            }
             commits(last: 1) {
               nodes {
                 commit {
