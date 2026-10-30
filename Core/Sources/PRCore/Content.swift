@@ -28,11 +28,16 @@ public func makeContent(from response: Data, scope: Scope) throws -> WidgetConte
     case .myPullRequests, .involved, .repository:
         items.map(\.pullRequest).sorted(by: actionRequiredThenRecentActivity)
     }
+    let counter = switch scope {
+    case .myPullRequests, .involved: pullRequests.filter(\.actionRequired).count
+    case .reviewRequested, .repository: payload.search.issueCount
+    }
     return WidgetContent(
         login: login,
         pullRequests: pullRequests,
         totalCount: payload.search.issueCount,
-        searchURL: scope.searchURL
+        searchURL: scope.searchURL,
+        counter: counter
     )
 }
 

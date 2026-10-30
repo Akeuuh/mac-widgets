@@ -44,7 +44,8 @@ extension WidgetContent {
         login: "octocat",
         pullRequests: (1...10).map(placeholderPullRequest),
         totalCount: 12,
-        searchURL: Scope.myPullRequests.searchURL
+        searchURL: Scope.myPullRequests.searchURL,
+        counter: 3
     )
 
     private static func placeholderPullRequest(_ number: Int) -> PullRequest {

@@ -18,6 +18,8 @@ struct PullRequestsView: View {
 
     var body: some View {
         switch entry.state {
+        case .content(let content) where family == .systemSmall:
+            CounterView(content: content)
         case .content(let content):
             VStack(alignment: .leading, spacing: 6) {
                 ForEach(content.pullRequests.prefix(capacity), id: \.url) { pullRequest in
@@ -39,6 +41,25 @@ struct PullRequestsView: View {
         case .missingRepository:
             Text("Choisis un dépôt : clic droit → Modifier le widget.")
         }
+    }
+}
+
+struct CounterView: View {
+    let content: WidgetContent
+
+    var body: some View {
+        Text("\(content.counter)")
+            .font(.system(size: 56, weight: .bold, design: .rounded))
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .overlay(alignment: .topTrailing) {
+                if content.hasFailingCI {
+                    Circle()
+                        .fill(.red)
+                        .frame(width: 12, height: 12)
+                        .accessibilityLabel("CI en échec")
+                }
+            }
+            .widgetURL(content.searchURL)
     }
 }
 
@@ -97,6 +118,12 @@ struct PullRequestRow: View {
             Image(systemName: "clock").foregroundStyle(.secondary)
         }
     }
+}
+
+#Preview(as: .systemSmall) {
+    PullRequestsWidget()
+} timeline: {
+    Entry(date: .now, state: .content(.placeholder))
 }
 
 #Preview(as: .systemMedium) {
