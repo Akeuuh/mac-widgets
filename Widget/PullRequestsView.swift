@@ -18,29 +18,75 @@ struct PullRequestsView: View {
 
     var body: some View {
         switch entry.state {
-        case .content(let content) where family == .systemSmall:
-            CounterView(content: content)
-        case .content(let content):
+        case .content(let content, let fetchedAt, let isStale) where family == .systemSmall:
+            VStack(spacing: 0) {
+                CounterView(content: content)
+                Freshness(fetchedAt: fetchedAt, isStale: isStale)
+            }
+        case .content(let content, let fetchedAt, let isStale):
             VStack(alignment: .leading, spacing: 6) {
+                if content.pullRequests.isEmpty {
+                    Text("Rien en attente ✓")
+                        .font(.headline)
+                        .foregroundStyle(.green)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
                 ForEach(content.pullRequests.prefix(capacity), id: \.url) { pullRequest in
                     PullRequestRow(pullRequest: pullRequest, showsLastMessage: family != .systemMedium)
                 }
                 Spacer(minLength: 0)
-                let hidden = content.hiddenCount(showing: capacity)
-                if hidden > 0 {
-                    Link("+\(hidden) autres", destination: content.searchURL)
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+                HStack {
+                    let hidden = content.hiddenCount(showing: capacity)
+                    if hidden > 0 {
+                        Link("+\(hidden) autres", destination: content.searchURL)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                    Spacer()
+                    Freshness(fetchedAt: fetchedAt, isStale: isStale)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         case .failure(.missingToken):
-            Text("Ouvre PR Widgets pour enregistrer ton token GitHub.")
-        case .failure:
-            Text("GitHub injoignable")
+            Problem(message: "Ouvre PR Widgets pour enregistrer ton token GitHub.")
+        case .failure(.invalidToken):
+            Problem(message: "Token invalide")
+        case .failure(.unavailable):
+            Problem(message: "GitHub injoignable")
         case .missingRepository:
-            Text("Choisis un dépôt : clic droit → Modifier le widget.")
+            Problem(message: "Choisis un dépôt : clic droit → Modifier le widget.")
         }
+    }
+}
+
+struct Freshness: View {
+    let fetchedAt: Date
+    let isStale: Bool
+
+    var body: some View {
+        HStack(spacing: 4) {
+            Text("il y a \(fetchedAt, style: .relative)")
+                .foregroundStyle(isStale ? AnyShapeStyle(.orange) : AnyShapeStyle(.tertiary))
+            Button(intent: RefreshIntent()) {
+                Image(systemName: "arrow.clockwise")
+            }
+            .buttonStyle(.plain)
+            .foregroundStyle(.secondary)
+            .accessibilityLabel("Rafraîchir")
+        }
+        .font(.caption2)
+    }
+}
+
+struct Problem: View {
+    let message: String
+
+    var body: some View {
+        Text(message)
+            .font(.callout)
+            .multilineTextAlignment(.center)
+            .foregroundStyle(.secondary)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
@@ -120,26 +166,62 @@ struct PullRequestRow: View {
     }
 }
 
-#Preview(as: .systemSmall) {
+#Preview("Contenu", as: .systemMedium) {
     PullRequestsWidget()
 } timeline: {
-    Entry(date: .now, state: .content(.placeholder))
+    Entry(date: .now, state: .content(.placeholder, fetchedAt: .now.addingTimeInterval(-240), isStale: false))
 }
 
-#Preview(as: .systemMedium) {
+#Preview("Grand", as: .systemLarge) {
     PullRequestsWidget()
 } timeline: {
-    Entry(date: .now, state: .content(.placeholder))
+    Entry(date: .now, state: .content(.placeholder, fetchedAt: .now, isStale: false))
 }
 
-#Preview(as: .systemLarge) {
+#Preview("Très grand", as: .systemExtraLarge) {
     PullRequestsWidget()
 } timeline: {
-    Entry(date: .now, state: .content(.placeholder))
+    Entry(date: .now, state: .content(.placeholder, fetchedAt: .now, isStale: false))
 }
 
-#Preview(as: .systemExtraLarge) {
+#Preview("Compteur", as: .systemSmall) {
     PullRequestsWidget()
 } timeline: {
-    Entry(date: .now, state: .content(.placeholder))
+    Entry(date: .now, state: .content(.placeholder, fetchedAt: .now, isStale: false))
+}
+
+#Preview("Hors ligne", as: .systemMedium) {
+    PullRequestsWidget()
+} timeline: {
+    Entry(date: .now, state: .content(.placeholder, fetchedAt: .now.addingTimeInterval(-3600), isStale: true))
+}
+
+#Preview("Rien en attente", as: .systemMedium) {
+    PullRequestsWidget()
+} timeline: {
+    Entry(date: .now, state: .content(.empty, fetchedAt: .now, isStale: false))
+}
+
+#Preview("Pas de token", as: .systemMedium) {
+    PullRequestsWidget()
+} timeline: {
+    Entry(date: .now, state: .failure(.missingToken))
+}
+
+#Preview("Token invalide", as: .systemMedium) {
+    PullRequestsWidget()
+} timeline: {
+    Entry(date: .now, state: .failure(.invalidToken))
+}
+
+#Preview("GitHub injoignable sans cache", as: .systemMedium) {
+    PullRequestsWidget()
+} timeline: {
+    Entry(date: .now, state: .failure(.unavailable))
+}
+
+#Preview("Dépôt à choisir", as: .systemMedium) {
+    PullRequestsWidget()
+} timeline: {
+    Entry(date: .now, state: .missingRepository)
 }

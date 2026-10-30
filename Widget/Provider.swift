@@ -4,7 +4,7 @@ import WidgetKit
 
 struct Entry: TimelineEntry {
     enum State {
-        case content(WidgetContent)
+        case content(WidgetContent, fetchedAt: Date, isStale: Bool)
         case failure(GitHubError)
         case missingRepository
     }
@@ -15,7 +15,7 @@ struct Entry: TimelineEntry {
 
 struct Provider: AppIntentTimelineProvider {
     func placeholder(in context: Context) -> Entry {
-        Entry(date: .now, state: .content(.placeholder))
+        Entry(date: .now, state: .content(.placeholder, fetchedAt: .now, isStale: false))
     }
 
     func snapshot(for configuration: ConfigurationIntent, in context: Context) async -> Entry {
@@ -30,11 +30,15 @@ struct Provider: AppIntentTimelineProvider {
     private func load(_ scope: Scope) async -> Entry.State {
         do {
             let response = try await GitHubClient.fromKeychain().search(scope)
-            return .content(try makeContent(from: response, scope: scope))
-        } catch let error as GitHubError {
+            let content = try makeContent(from: response, scope: scope)
+            ResponseCache.save(response, for: scope)
+            return .content(content, fetchedAt: .now, isStale: false)
+        } catch let error as GitHubError where error != .unavailable {
             return .failure(error)
         } catch {
-            return .failure(.unavailable)
+            guard let cached = ResponseCache.load(for: scope),
+                  let content = try? makeContent(from: cached.response, scope: scope) else { return .failure(.unavailable) }
+            return .content(content, fetchedAt: cached.date, isStale: true)
         }
     }
 }
@@ -46,6 +50,14 @@ extension WidgetContent {
         totalCount: 12,
         searchURL: Scope.myPullRequests.searchURL,
         counter: 3
+    )
+
+    static let empty = WidgetContent(
+        login: "octocat",
+        pullRequests: [],
+        totalCount: 0,
+        searchURL: Scope.myPullRequests.searchURL,
+        counter: 0
     )
 
     private static func placeholderPullRequest(_ number: Int) -> PullRequest {
